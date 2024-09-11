@@ -1,38 +1,263 @@
-.App {
+.player {
+  width: 100%;
+  overflow: hidden;
+  padding: 25px;
+}
+
+.player .nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.player .img {
+  width: 100%;
+  height: 270px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.player .img img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  animation: rotate 20s linear;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  user-select: none;
+}
+
+.player .img img.playing {
+  animation-play-state: running;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
+.player canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+
+.player .details {
+  width: 100%;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.player .details .title {
+  font-size: 1.2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.player .details .artist {
+  color: #bbb;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.player .progress {
+  margin-top: 15px;
+}
+
+.player .progress input {
+  width: 100%;
+  height: 4px;
+}
+
+.player .timer {
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #bbb;
+  margin-top: 10px;
+}
+
+.player .controls {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.player .controls #prev,
+.player .controls #next {
+  font-size: 2.5rem;
+}
+
+.player .controls .play {
+  width: 3.2rem;
+  height: 3.2rem;
+  background: linear-gradient(#fff 0%, #cecaca 100%);
+  border-radius: 50%;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.player .controls .play::before {
+  content: '';
+  position: absolute;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: inherit;
+  background: linear-gradient(#8dadff, #fe72a3 100%);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.player .controls .play i {
+  background: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: absolute;
+}
+
+.player .controls .volume {
+  width: 100%;
+  height: 50px;
+  background: #333;
+  position: absolute;
+  bottom: -10%;
+  left: 0;
+  border-radius: 10px;
+  border: 1px solid #555;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px;
+  z-index: 5;
+  transition: bottom 0.2s linear;
+  gap: 5px;
+}
+
+.player .controls .volume.show {
+  bottom: 0;
+}
+
+.player .controls .volume input {
+  width: 100%;
+  height: 4px;
+}
+
+.container {
+  width: 360px;
+  border-radius: 15px;
+  position: relative;
+}
+
+.shape {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.shape-1 {
+  background: radial-gradient(circle at 35px 65px, #9b22ea, #005);
+  filter: blur(50px);
+  left: -65px;
+  top: -65px;
+}
+
+.shape-2 {
+  background: radial-gradient(circle at 45px 90px, #ea22b1, #111);
+  right: -65px;
+  bottom: -65px;
+  filter: blur(50px);
+}
+
+.shape-3 {
+  width: 60px;
+  height: 60px;
+  background: #08e2ff;
+  right: 7px;
+  top: 10px;
+  filter: blur(20px);
+}
+
+/* list */
+
+.list {
+  width: 100%; 
+  position: absolute;
+  bottom: -60%;
+  left: 0;
+  background: white;
+  color: #080710;
+  box-shadow: 0 -5px 10px rgba(0,0,0,0.1);
+  transition: all 0.2s ease-out;
+  z-index: 10;
+}
+
+.list.show {
+  bottom: 0;
+}
+
+.list .header {
+  width: 100%;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list .header i {
+  font-size: 1.7rem;
+}
+
+.list .header > div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.list .header > div span {
+  font-size: 1.25rem;
+  text-transform: capitalize;
+  color: #444;
+}
+
+.list ul {
+  width: 100%;
+  height: 250px;
+  overflow-y: scroll;
+}
+
+.list ul::-webkit-scrollbar {
+  width: 0px;
+}
+
+.list ul li {
+  width: 100%;
+  padding: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.list ul li:hover {
+  background: palegoldenrod;
+}
+
+.list ul li .row p {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+.duration {
+  font-size: 0.9rem;
+}
+
+.list ul li.playing {
+  background: papayawhip;
 }
